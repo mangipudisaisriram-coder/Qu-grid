@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      QUANTUMUC_SECRET: change-me-in-production
+      CORS_ORIGINS: http://localhost:5173
+    volumes: ["qdata:/data"]
+    ports: ["8000:8000"]
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_PROXY_TARGET: http://backend:8000
+    ports: ["5173:5173"]
+    depends_on: [backend]
+volumes:
+  qdata: {}
